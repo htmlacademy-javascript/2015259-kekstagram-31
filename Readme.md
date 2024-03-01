@@ -1,7 +1,9 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Марина Моисеенко](https://up.htmlacademy.ru/javascript/31/user/2015259).
-* Наставник: [Роман Марченко](https://htmlacademy.ru/profile/id505487).
+* Наставник: [Роман Марченко] (https://htmlacademy.ru/profile/id505487).
+
+
 
 ---
 
