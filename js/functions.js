@@ -6,7 +6,7 @@ checkLength('проверяемая строка', 18); //вернет true
 checkLength('проверяемая строка', 10); //вернет false
 
 //Функция для проверки, является ли строка палиндромом
-function isPalindrome(string) {
+const isPalindrome = (string) => {
   const normalString = string.replaceAll(' ', '').toLowerCase();//удаляет пробелы и приводит строку к нижнему регистру
   let newString = '';//создает новую пустую строку
   //проверяет является ли строка полиндромом с помощью цикла for
@@ -18,14 +18,14 @@ function isPalindrome(string) {
     return true;
   }
   return false;
-}
+};
 
 isPalindrome('ДовОд'); // вернет true
 isPalindrome('Лёша на полке клопа нашёл '); // вернет true
 isPalindrome('Кекс всему голова'); //вернет false
 
 //Функция принимает строку, извлекает содержащиеся в ней цифры от 0 до 9 и возвращает их в виде целого положительного числа
-function getNumbers(str) {
+const getNumbers = (str) => {
   //Если передано число, преобразует его в строку
   let newStr = str;
   if (typeof str === 'number') {
@@ -43,7 +43,7 @@ function getNumbers(str) {
     return NaN;
   }
   return parseInt(numbers, 10);
-}
+};
 
 getNumbers('ECMAScript 2022');
 getNumbers('2023 год');
@@ -58,7 +58,7 @@ getNumbers(1.5);
 //Напишите функцию, которая принимает время начала и конца рабочего дня, а также время старта и продолжительность встречи в минутах
 //и возвращает true, если встреча не выходит за рамки рабочего дня, и false, если выходит.
 
-function businessTime(startWork, endWork, meetingStart, meetingTime) {
+const businessTime = (startWork, endWork, meetingStart, meetingTime) => {
   // Преобразуем время в минуты
   const startWorkMinutes = parseInt(startWork.split(':')[0], 10) * 60 + parseInt(startWork.split(':')[1], 10);
   const endWorkMinutes = parseInt(endWork.split(':')[0], 10) * 60 + parseInt(endWork.split(':')[1], 10);
@@ -67,10 +67,35 @@ function businessTime(startWork, endWork, meetingStart, meetingTime) {
 
   // Проверяем, выходит ли встреча за рамки рабочего дня
   return startWorkMinutes <= meetingStartMinutes && meetingTimeMinutes <= endWorkMinutes;
-}
+};
 
 businessTime('08:00', '17:30', '14:00', 90); // true
 businessTime('8:0', '10:0', '8:0', 120); // true
 businessTime('08:30', '14:30', '14:00', 90); // false
 businessTime('14:00', '17:30', '08:0', 90); // false
 businessTime('8:00', '17:30', '08:00', 900); // false
+
+//2-ой вариант решения предыдущей задачи
+
+const businessTimeSecond = (startWork, endWork, meetingStart, meetingTime) => {
+  // Преобразуем строки с временем в объекты типа Date
+  const startWorkingTime = new Date(`2024/03/01 ${startWork}`);
+  const endWorkingTime = new Date(`2024/03/01 ${endWork}`);
+  const startMeeting = new Date(`2024/03/01 ${meetingStart}`);
+
+  // Рассчитываем время окончания встречи на основе начала и продолжительности
+  const endMeeting = new Date(startMeeting.getTime() + (meetingTime * 60000));
+
+  // Проверяем, находится ли время окончания встречи внутри рабочего дня
+  if (startMeeting >= startWorkingTime && endMeeting <= endWorkingTime) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+businessTimeSecond('08:00', '17:30', '14:00', 90); // true
+businessTimeSecond('8:0', '10:0', '8:0', 120); // true
+businessTimeSecond('08:30', '14:30', '14:00', 90); // false
+businessTimeSecond('14:00', '17:30', '08:0', 90); // false
+businessTimeSecond('8:00', '17:30', '08:00', 900); // false
