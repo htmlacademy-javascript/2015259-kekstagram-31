@@ -15,7 +15,7 @@ const createObjComment = () => ({
 
 const createPhotoDescription = () => ({
   id: randomIdPhotoDescription(),
-  url: `photos/${randomIdPhoto()}.svg`,
+  url: `photos/${randomIdPhoto()}.jpg`,
   description: getRandomEArrayElement(CAPTIONS),
   likes: getRandomInteger(LIKES.MIN, LIKES.MAX),
   comments: Array.from({ length: getRandomInteger(COMMENTS_RANGE.MIN, COMMENTS_RANGE.MAX) }, createObjComment),
@@ -24,4 +24,5 @@ const createPhotoDescription = () => ({
 const createOverviewPhoto = () =>
   Array.from({ length: ARRAY_RANGE.MAX }, createPhotoDescription);
 
-export { createOverviewPhoto };
+const photos = createOverviewPhoto ();
+export { photos };
