@@ -1,4 +1,4 @@
-import { photos } from './createOverviewPhoto.js';
-// eslint-disable-next-line no-console
-console.log(photos);
-import './prewie.js';
+import { createOverviewPhoto } from './data-generation.js';
+import { renderPack } from './thumbnails.js';
+
+renderPack(createOverviewPhoto());

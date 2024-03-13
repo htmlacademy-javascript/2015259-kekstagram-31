@@ -24,5 +24,4 @@ const createPhotoDescription = () => ({
 const createOverviewPhoto = () =>
   Array.from({ length: ARRAY_RANGE.MAX }, createPhotoDescription);
 
-const photos = createOverviewPhoto ();
-export { photos };
+export { createOverviewPhoto };
