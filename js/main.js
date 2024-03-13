@@ -1,3 +1,4 @@
-import { createOverviewPhoto } from './createOverviewPhoto.js';
-// eslint-disable-next-line no-console
-console.log(createOverviewPhoto());
+import { createOverviewPhoto } from './data-generation.js';
+import { renderPack } from './thumbnails.js';
+
+renderPack(createOverviewPhoto());
