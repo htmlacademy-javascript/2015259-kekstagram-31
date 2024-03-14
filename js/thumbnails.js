@@ -1,14 +1,22 @@
+import { openPreview } from './popup.js';
+
 //Шаблон изображения
 const template = document.querySelector('#picture').content.querySelector('.picture');
 
-const createThumbnail = ({ url, likes, comments, description }) => {
+const createThumbnail = (post) => {
   const thumbnail = template.cloneNode(true);
   const image = thumbnail.querySelector('.picture__img');
 
-  image.src = url;
-  image.alt = description;
-  thumbnail.querySelector('.picture__likes').textContent = likes;
-  thumbnail.querySelector('.picture__comments').textContent = comments.length;
+  image.src = post.url;
+  image.alt = post.description;
+  thumbnail.querySelector('.picture__likes').textContent = post.likes;
+  thumbnail.querySelector('.picture__comments').textContent = post.comments.length;
+
+  thumbnail.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    openPreview(post);
+  });
+
   return thumbnail;
 };
 
