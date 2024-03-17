@@ -1,4 +1,4 @@
-import { openPreview } from './popup.js';
+import { openModal } from './modal.js';
 
 //Шаблон изображения
 const template = document.querySelector('#picture').content.querySelector('.picture');
@@ -14,7 +14,7 @@ const createThumbnail = (post) => {
 
   thumbnail.addEventListener('click', (evt) => {
     evt.preventDefault();
-    openPreview(post);
+    openModal(post);
   });
 
   return thumbnail;
