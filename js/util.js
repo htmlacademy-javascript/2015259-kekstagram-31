@@ -45,4 +45,6 @@ const generatedUniqueRandomId = (min, max) => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
-export { getRandomInteger, getRandomEArrayElement, generatedUniqueRandomId, isEscapeKey };
+const checkIdentical = (items) => items.some((item, i) => items.indexOf(item, i + 1) > -1);
+
+export { getRandomInteger, getRandomEArrayElement, generatedUniqueRandomId, isEscapeKey, checkIdentical };
