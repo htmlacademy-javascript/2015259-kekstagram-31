@@ -23,7 +23,7 @@ const showUploadPicture = () => {
 };
 
 const onDocumentKeydown = (evt) => {
-  if(isEscapeKey(evt)){
+  if (isEscapeKey(evt)) {
     evt.preventDefault();
     hideUploadPicture();
   }

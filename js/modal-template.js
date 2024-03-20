@@ -43,7 +43,6 @@ const onCommentsLoaderClick = () => {
   if (count >= pictureComments.length) {
     commentsLoader.classList.add('hidden');
   }
-
 };
 
 const renderCommentsBlock = (post) => {

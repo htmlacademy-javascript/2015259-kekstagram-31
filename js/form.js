@@ -3,7 +3,8 @@ import {
   validateSymbolsHashtags,
   validateCountHashtags,
   validateHashtagsByLength,
-  validateCommentLenght } from './validator.js';
+  validateCommentLenght
+} from './validator.js';
 
 const form = document.querySelector('.img-upload__form');
 const textHashtags = document.querySelector('.text__hashtags');
