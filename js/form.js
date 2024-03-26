@@ -3,7 +3,8 @@ import {
   validateSymbolsHashtags,
   validateCountHashtags,
   validateHashtagsByLength,
-  validateCommentLenght } from './validator.js';
+  validateCommentLenght
+} from './validator.js';
 
 const form = document.querySelector('.img-upload__form');
 const textHashtags = document.querySelector('.text__hashtags');
@@ -26,14 +27,14 @@ pristine.addValidator(textDescription, validateCommentLenght, 'Длина ком
 
 //Добавим обработчик события 'submit' для формы
 form.addEventListener('submit', (evt) => {
-  const value = textHashtags.value.trim();
-  const valueComment = textDescription.value;
   const isValid = pristine.validate();
-  if (value === '' && valueComment === '') {
-    pristine.validate();
-  } else {
-    if (!isValid) {
-      evt.preventDefault();
-    }
+  if (!isValid) {
+    evt.preventDefault();
   }
 });
+
+const resetValidators = () => {
+  pristine.reset();
+};
+
+export { resetValidators };
