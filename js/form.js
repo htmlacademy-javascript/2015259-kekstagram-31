@@ -27,14 +27,14 @@ pristine.addValidator(textDescription, validateCommentLenght, 'Длина ком
 
 //Добавим обработчик события 'submit' для формы
 form.addEventListener('submit', (evt) => {
-  const value = textHashtags.value.trim();
-  const valueComment = textDescription.value;
   const isValid = pristine.validate();
-  if (value === '' && valueComment === '') {
-    pristine.validate();
-  } else {
-    if (!isValid) {
-      evt.preventDefault();
-    }
+  if (!isValid) {
+    evt.preventDefault();
   }
 });
+
+const resetValidators = () => {
+  pristine.reset();
+};
+
+export { resetValidators };
