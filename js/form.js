@@ -1,3 +1,5 @@
+import { showAlert } from './util/common.js';
+import { sendData } from './api.js';
 import {
   validateUniqueHashtags,
   validateSymbolsHashtags,
@@ -7,8 +9,14 @@ import {
 } from './validator.js';
 
 const form = document.querySelector('.img-upload__form');
+const submitButton = form.querySelector('#upload-submit');
 const textHashtags = document.querySelector('.text__hashtags');
 const textDescription = document.querySelector('.text__description');
+
+const SubmitButtonText = {
+  IDLE: 'Загрузить',
+  SENDING: 'Загружаю...'
+};
 
 //Cоздает новый объект pristine, который будет управлять валидацией формы,
 //добавляя и удаляя классы и тексты об ошибках в зависимости от результатов валидации
@@ -25,16 +33,41 @@ pristine.addValidator(textHashtags, validateSymbolsHashtags, 'После # ис�
 pristine.addValidator(textHashtags, validateUniqueHashtags, 'Хэштеги не должны повторяться', 1, true);
 pristine.addValidator(textDescription, validateCommentLenght, 'Длина комментария не более 140 символов', 1, true);
 
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
+
+
 //Добавим обработчик события 'submit' для формы
-form.addEventListener('submit', (evt) => {
-  const isValid = pristine.validate();
-  if (!isValid) {
+const setFormSubmit = (onSuccess) => {
+  form.addEventListener('submit', (evt) => {
+
     evt.preventDefault();
-  }
-});
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(onSuccess)
+        .catch(
+          (err) => {
+            showAlert(err.message);
+          }
+        )
+        .finally(unblockSubmitButton);
+    }
+  });
+};
 
 const resetValidators = () => {
   pristine.reset();
 };
 
-export { resetValidators };
+export { setFormSubmit, resetValidators };
