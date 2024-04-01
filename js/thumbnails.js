@@ -2,6 +2,8 @@ import { openModal } from './modal.js';
 
 //Шаблон изображения
 const template = document.querySelector('#picture').content.querySelector('.picture');
+const pictures = document.querySelector('.pictures');
+const imgFiltersElement = document.querySelector('.img-filters');
 
 const createThumbnail = (post) => {
   const thumbnail = template.cloneNode(true);
@@ -23,7 +25,13 @@ const createThumbnail = (post) => {
 const renderPack = (photos) => {
   const fragment = document.createDocumentFragment();
   fragment.append(...photos.map(createThumbnail));
+
+  pictures.querySelectorAll('.picture').forEach((element) => {
+    element.remove();
+  });
   document.querySelector('.pictures').append(fragment);
+
+  imgFiltersElement.classList.remove('img-filters--inactive');
 };
 
 export { renderPack };

@@ -1,4 +1,4 @@
-import { showAlert } from './util/common.js';
+import { showAlert } from './util.js';
 import { sendData } from './api.js';
 import {
   validateUniqueHashtags,
@@ -14,8 +14,8 @@ const textHashtags = document.querySelector('.text__hashtags');
 const textDescription = document.querySelector('.text__description');
 
 const SubmitButtonText = {
-  IDLE: 'Загрузить',
-  SENDING: 'Загружаю...'
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикация...'
 };
 
 //Cоздает новый объект pristine, который будет управлять валидацией формы,

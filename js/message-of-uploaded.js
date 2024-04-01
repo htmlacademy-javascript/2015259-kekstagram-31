@@ -1,4 +1,4 @@
-import { isEscapeKey } from './common';
+import { isEscapeKey } from './util';
 
 const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
 const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
@@ -12,19 +12,21 @@ const showMessage = (type) => {
 
   const remove = () => {
     message.remove();
+    // eslint-disable-next-line no-use-before-define
     document.removeEventListener('click', onClick);
-    document.removeEventListener('keydown', onEscapeKeydown);
+    // eslint-disable-next-line no-use-before-define
+    document.removeEventListener('keydown', onDocumentKeydown);
   };
 
-  function onEscapeKeydown(evt) {
+  const onDocumentKeydown = (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
 
       remove();
     }
-  }
+  };
 
-  function onClick(evt) {
+  const onClick = (evt) => {
     evt.preventDefault();
 
     if (messageBlock === evt.target || messageTitle === evt.target) {
@@ -33,12 +35,12 @@ const showMessage = (type) => {
     }
 
     remove();
-  }
+  };
 
   document.body.append(message);
 
   document.addEventListener('click', onClick);
-  document.addEventListener('keydown', onEscapeKeydown);
+  document.addEventListener('keydown', onDocumentKeydown);
 };
 
-export {showMessage};
+export { showMessage };
