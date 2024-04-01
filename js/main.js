@@ -1,12 +1,23 @@
 import { renderPack } from './thumbnails.js';
-import { setFormSubmit } from './form.js';
-import { getData } from './api.js';
+import { getData, sendData } from './api.js';
 import { showAlert, debounce } from './util.js';
+import { setFormSubmit } from './form.js';
 import { hideUploadPicture } from './upload-open.js';
 import { showMessage } from './message-of-uploaded.js';
 import { initFilterListeners } from './filter.js';
+import './upload-photo.js';
 
 const RENDER_PHOTOS_DELAY = 500;
+
+setFormSubmit(async (data) => {
+  try {
+    await sendData(data);
+    hideUploadPicture();
+    showMessage('success');
+  } catch {
+    showMessage('error');
+  }
+});
 
 try {
   const data = await getData();
@@ -15,14 +26,3 @@ try {
 } catch (err) {
   showAlert(err.message);
 }
-
-setFormSubmit(
-  () => {
-    hideUploadPicture();
-    showMessage('success');
-  },
-
-  () => {
-    hideUploadPicture();
-    showMessage('error');
-  });

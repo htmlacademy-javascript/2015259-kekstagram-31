@@ -1,5 +1,5 @@
 import { isEscapeKey } from './util.js';
-import { renderCommentsBlock } from './modal-template.js';
+import { renderCommentsBlock } from './render-comments.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImage = bigPicture.querySelector('.big-picture__img img');

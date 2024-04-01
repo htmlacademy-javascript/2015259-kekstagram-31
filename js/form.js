@@ -1,5 +1,3 @@
-import { showAlert } from './util.js';
-import { sendData } from './api.js';
 import {
   validateUniqueHashtags,
   validateSymbolsHashtags,
@@ -46,22 +44,16 @@ const unblockSubmitButton = () => {
 
 
 //Добавим обработчик события 'submit' для формы
-const setFormSubmit = (onSuccess) => {
-  form.addEventListener('submit', (evt) => {
+const setFormSubmit = (cb) => {
+  form.addEventListener('submit', async (evt) => {
 
     evt.preventDefault();
 
     const isValid = pristine.validate();
     if (isValid) {
       blockSubmitButton();
-      sendData(new FormData(evt.target))
-        .then(onSuccess)
-        .catch(
-          (err) => {
-            showAlert(err.message);
-          }
-        )
-        .finally(unblockSubmitButton);
+      await cb(new FormData(form));
+      unblockSubmitButton();
     }
   });
 };
