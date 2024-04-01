@@ -1,4 +1,4 @@
-import { isEscapeKey } from './util/common.js';
+import { isEscapeKey } from './util.js';
 import { renderCommentsBlock } from './modal-template.js';
 
 const bigPicture = document.querySelector('.big-picture');

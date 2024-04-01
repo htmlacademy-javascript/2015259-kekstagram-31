@@ -1,4 +1,4 @@
-import { isEscapeKey } from './util/common.js';
+import { isEscapeKey } from './util.js';
 import { resetEffectImage, createSlider, onEffectsChange, destroySlider } from './editor.js';
 import { changeImageScale, ScaleValue } from './scale.js';
 import { resetValidators } from './form.js';

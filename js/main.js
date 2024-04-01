@@ -1,21 +1,20 @@
 import { renderPack } from './thumbnails.js';
 import { setFormSubmit } from './form.js';
 import { getData } from './api.js';
-import { showAlert } from './util/common.js';
+import { showAlert, debounce } from './util.js';
 import { hideUploadPicture } from './upload-open.js';
-import { showMessage } from './util/message.js';
+import { showMessage } from './message-of-uploaded.js';
+import { initFilterListeners } from './filter.js';
 
-const SIMILAR_PHOTOS_COUNT = 25;
+const RENDER_PHOTOS_DELAY = 500;
 
-getData()
-  .then((pictures) => {
-    renderPack(pictures.slice(0, SIMILAR_PHOTOS_COUNT));
-  })
-  .catch(
-    (err) => {
-      showAlert(err.message);
-    }
-  );
+try {
+  const data = await getData();
+  renderPack(data);
+  initFilterListeners(data, debounce(renderPack, RENDER_PHOTOS_DELAY));
+} catch (err) {
+  showAlert(err.message);
+}
 
 setFormSubmit(
   () => {
@@ -27,4 +26,3 @@ setFormSubmit(
     hideUploadPicture();
     showMessage('error');
   });
-

@@ -1,5 +1,28 @@
 const ALERT_SHOW_TIME = 5000;
 
+const dataErrorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
+
+const showAlert = (message) => {
+  const messageBlock = dataErrorTemplate.cloneNode(true);
+  messageBlock.querySelector('.data-error__title').textContent = message;
+
+  document.body.append(messageBlock);
+
+  setTimeout(() => {
+    messageBlock.remove();
+  }, ALERT_SHOW_TIME);
+};
+
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+
+  };
+};
+
 const getRandomInteger = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 const getRandomEArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
@@ -24,26 +47,4 @@ const isEscapeKey = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
 const checkIdentical = (items) => items.some((item, i) => items.indexOf(item, i + 1) > -1);
 
-const showAlert = (message) => {
-  const alertContainer = document.createElement('div');
-  const style = alertContainer.style;
-  style.zIndex = 100;
-  style.position = 'absolute';
-  style.left = 0;
-  style.top = 0;
-  style.right = 0;
-  style.padding = '10px 3px';
-  style.fontSize = '30px';
-  style.textAlign = 'center';
-  style.backgroundColor = 'red';
-
-  alertContainer.textContent = message;
-
-  document.body.append(alertContainer);
-
-  setTimeout(() => {
-    alertContainer.remove();
-  }, ALERT_SHOW_TIME);
-};
-
-export { getRandomInteger, getRandomEArrayElement, generatedUniqueRandomId, isEscapeKey, checkIdentical, showAlert };
+export { getRandomInteger, getRandomEArrayElement, generatedUniqueRandomId, isEscapeKey, checkIdentical, debounce, showAlert };
