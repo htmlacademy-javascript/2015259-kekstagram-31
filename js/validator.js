@@ -8,7 +8,7 @@ const MAX_COMMENT_LENGTH = 140;
 const hashtagSymbolRegexp = /^#[A-Za-zА-Яа-яЁё0-9]+$/;
 
 //Функция удаляет лишние пробелы, приводит хэштеги к нижнему регистру и разделяет их пробелами.
-const parseHashtagInput = (value) => value.trim().toLowerCase().split(' ');
+const parseHashtagInput = (value) => value.trim().toLowerCase().split(/\s+/);
 
 //проверим что длина каждого хэштега не привышает максимально заданной длины
 const checkHashtagsLength = (hashtags) => hashtags.every((hashtag) => hashtag.length <= HASHTAG_MAX_LENGTH);

@@ -1,15 +1,15 @@
 import { isEscapeKey } from './util.js';
-import { resetEffectImage, createSlider, onEffectsChange, destroySlider } from './editor.js';
+import { resetEffectImage, createSlider, onEffectsChange, destroySlider } from './effects.js';
 import { changeImageScale, ScaleValue } from './scale.js';
-import { resetValidators } from './form.js';
+import { resetValidators } from './edit-form.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const imageUploadOverlay = document.querySelector('.img-upload__overlay');
 const uploadFile = document.querySelector('#upload-file');
 const uploadCancel = document.querySelector('#upload-cancel');
-const imageUploadTextInput = document.querySelector('.img-upload__text input');
-const imageUploadTextTextarea = document.querySelector('.img-upload__text textarea');
 const effects = document.querySelector('.img-upload__effects');
+const hashtagField = document.querySelector('.text__hashtags');
+const commentField = document.querySelector('.text__description');
 
 const resetUploadPicture = () => {
   changeImageScale(ScaleValue.MAX);
@@ -19,8 +19,8 @@ const resetUploadPicture = () => {
 
 const hideUploadPicture = () => {
   uploadForm.reset();
-  resetUploadPicture();
   destroySlider();
+  resetUploadPicture();
   imageUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   effects.removeEventListener('change', onEffectsChange);
@@ -38,22 +38,19 @@ const showUploadPicture = () => {
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
+const ifInTextFieldFocused = () =>
+  document.activeElement === hashtagField || document.activeElement === commentField;
+
+//функция для нажатия на "Esc"
 const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
+  if (isEscapeKey(evt) && !ifInTextFieldFocused()) {
     evt.preventDefault();
-    hideUploadPicture();
+    const hasHiddenPopup = document.querySelector('.error');
+    if (!hasHiddenPopup) {
+      hideUploadPicture();
+    }
   }
 };
-
-//обработчик для события нажатия Esc в поле при фокусе
-[imageUploadTextInput, imageUploadTextTextarea].forEach((element) => {
-  element.addEventListener('focusin', () => {
-    document.removeEventListener('keydown', onDocumentKeydown);
-  });
-  element.addEventListener('focusout', () => {
-    document.addEventListener('keydown', onDocumentKeydown);
-  });
-});
 
 uploadFile.addEventListener('change', showUploadPicture);
 

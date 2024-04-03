@@ -1,8 +1,8 @@
 import { renderPack } from './thumbnails.js';
 import { getData, sendData } from './api.js';
 import { showAlert, debounce } from './util.js';
-import { setFormSubmit } from './form.js';
-import { hideUploadPicture } from './upload-open.js';
+import { setFormSubmit } from './edit-form.js';
+import { hideUploadPicture } from './open-upload.js';
 import { showMessage } from './message-of-uploaded.js';
 import { initFilterListeners } from './filter.js';
 import './upload-photo.js';

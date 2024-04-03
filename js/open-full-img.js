@@ -14,7 +14,7 @@ const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     // eslint-disable-next-line no-use-before-define
-    closeModal();
+    closeFullImg();
   }
 };
 
@@ -22,12 +22,12 @@ const onDocumentKeydown = (evt) => {
 const onOverlayClick = (evt) => {
   if (!evt.target.closest('.big-picture__preview')) {
     // eslint-disable-next-line no-use-before-define
-    closeModal();
+    closeFullImg();
   }
 };
 
 //функция - действия при открытии большого изображения
-const openModal = (post) => {
+const openFullImg = (post) => {
   bigPictureImage.src = post.url;
   likesCount.textContent = post.likes;
   socialCommentsCount.textContent = post.comments.length;
@@ -41,7 +41,7 @@ const openModal = (post) => {
 };
 
 //функция - действия при закрытии большого изображения
-const closeModal = () => {
+const closeFullImg = () => {
   bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
@@ -49,7 +49,7 @@ const closeModal = () => {
 };
 
 bigPictureCancel.addEventListener('click', () => {
-  closeModal();
+  closeFullImg();
 });
 
-export { openModal };
+export { openFullImg };
