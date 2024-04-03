@@ -7,8 +7,6 @@ const uploadForm = document.querySelector('.img-upload__form');
 const imageUploadOverlay = document.querySelector('.img-upload__overlay');
 const uploadFile = document.querySelector('#upload-file');
 const uploadCancel = document.querySelector('#upload-cancel');
-const imageUploadTextInput = document.querySelector('.img-upload__text input');
-const imageUploadTextTextarea = document.querySelector('.img-upload__text textarea');
 const effects = document.querySelector('.img-upload__effects');
 const hashtagField = document.querySelector('.text__hashtags');
 const commentField = document.querySelector('.text__description');
@@ -53,16 +51,6 @@ const onDocumentKeydown = (evt) => {
     }
   }
 };
-
-//обработчик для события нажатия Esc в поле при фокусе
-[imageUploadTextInput, imageUploadTextTextarea].forEach((element) => {
-  element.addEventListener('focusin', () => {
-    document.removeEventListener('keydown', onDocumentKeydown);
-  });
-  element.addEventListener('focusout', () => {
-    document.addEventListener('keydown', onDocumentKeydown);
-  });
-});
 
 uploadFile.addEventListener('change', showUploadPicture);
 
