@@ -1,7 +1,7 @@
 import { isEscapeKey } from './util.js';
-import { resetEffectImage, createSlider, onEffectsChange, destroySlider } from './editor.js';
+import { resetEffectImage, createSlider, onEffectsChange, destroySlider } from './effects.js';
 import { changeImageScale, ScaleValue } from './scale.js';
-import { resetValidators } from './form.js';
+import { resetValidators } from './edit-form.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const imageUploadOverlay = document.querySelector('.img-upload__overlay');
