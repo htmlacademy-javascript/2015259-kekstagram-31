@@ -22,7 +22,7 @@ const createThumbnail = (post) => {
   return thumbnail;
 };
 
-const renderPack = (photos) => {
+const renderThumbnails = (photos) => {
   const fragment = document.createDocumentFragment();
   fragment.append(...photos.map(createThumbnail));
 
@@ -34,4 +34,4 @@ const renderPack = (photos) => {
   imgFiltersElement.classList.remove('img-filters--inactive');
 };
 
-export { renderPack };
+export { renderThumbnails };

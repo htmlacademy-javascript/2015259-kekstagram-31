@@ -1,5 +1,5 @@
 import { isEscapeKey } from './util.js';
-import { resetEffectImage, createSlider, onEffectsChange, destroySlider } from './effects.js';
+import { resetEffectImage, onEffectsChange } from './effects.js';
 import { changeImageScale, ScaleValue } from './scale.js';
 import { resetValidators } from './edit-form.js';
 
@@ -19,7 +19,6 @@ const resetUploadPicture = () => {
 
 const hideUploadPicture = () => {
   uploadForm.reset();
-  destroySlider();
   resetUploadPicture();
   imageUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
@@ -30,7 +29,6 @@ const hideUploadPicture = () => {
 
 const showUploadPicture = () => {
   resetUploadPicture();
-  createSlider();
   imageUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   effects.addEventListener('change', onEffectsChange);
