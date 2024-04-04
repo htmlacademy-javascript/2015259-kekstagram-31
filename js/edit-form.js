@@ -1,3 +1,7 @@
+import { sendData } from './api.js';
+import { hideUploadPicture } from './open-upload.js';
+import { showMessage } from './message-of-uploaded.js';
+import { createSlider } from './effects.js';
 import {
   validateUniqueHashtags,
   validateSymbolsHashtags,
@@ -18,7 +22,7 @@ const SubmitButtonText = {
 
 //Cоздает новый объект pristine, который будет управлять валидацией формы,
 //добавляя и удаляя классы и тексты об ошибках в зависимости от результатов валидации
-const pristine = new window.Pristine(form, {
+const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper--error',
@@ -31,6 +35,7 @@ pristine.addValidator(textHashtags, validateSymbolsHashtags, 'После # ис�
 pristine.addValidator(textHashtags, validateUniqueHashtags, 'Хэштеги не должны повторяться', 1, true);
 pristine.addValidator(textDescription, validateCommentLenght, 'Длина комментария не более 140 символов', 1, true);
 
+createSlider();
 
 const blockSubmitButton = () => {
   submitButton.disabled = true;
@@ -42,24 +47,30 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
-
 //Добавим обработчик события 'submit' для формы
-const setFormSubmit = (cb) => {
-  form.addEventListener('submit', async (evt) => {
-
-    evt.preventDefault();
-
-    const isValid = pristine.validate();
-    if (isValid) {
-      blockSubmitButton();
-      await cb(new FormData(form));
-      unblockSubmitButton();
-    }
-  });
+const setFormSubmit = async (formData) => {
+  try {
+    await sendData(formData);
+    hideUploadPicture();
+    showMessage('success');
+  } catch {
+    showMessage('error');
+  }
 };
+
+form.addEventListener('submit', async (evt) => {
+  evt.preventDefault();
+
+  const isValid = pristine.validate();
+  if (isValid) {
+    blockSubmitButton();
+    await setFormSubmit(new FormData(form));
+    unblockSubmitButton();
+  }
+});
 
 const resetValidators = () => {
   pristine.reset();
 };
 
-export { setFormSubmit, resetValidators };
+export { resetValidators };

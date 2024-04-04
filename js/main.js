@@ -1,28 +1,16 @@
-import { renderPack } from './thumbnails.js';
-import { getData, sendData } from './api.js';
+import { renderThumbnails } from './thumbnails.js';
+import { getData } from './api.js';
 import { showAlert, debounce } from './util.js';
-import { setFormSubmit } from './edit-form.js';
-import { hideUploadPicture } from './open-upload.js';
-import { showMessage } from './message-of-uploaded.js';
 import { initFilterListeners } from './filter.js';
+import './edit-form.js';
 import './upload-photo.js';
 
 const RENDER_PHOTOS_DELAY = 500;
 
-setFormSubmit(async (data) => {
-  try {
-    await sendData(data);
-    hideUploadPicture();
-    showMessage('success');
-  } catch {
-    showMessage('error');
-  }
-});
-
 try {
   const data = await getData();
-  renderPack(data);
-  initFilterListeners(data, debounce(renderPack, RENDER_PHOTOS_DELAY));
+  renderThumbnails(data);
+  initFilterListeners(data, debounce(renderThumbnails, RENDER_PHOTOS_DELAY));
 } catch (err) {
   showAlert(err.message);
 }

@@ -81,10 +81,6 @@ const updateOptionsSlider = (effect) => {
   });
 };
 
-const destroySlider = () => {
-  sliderElement.noUiSlider.destroy();
-};
-
 //функция-обработчик
 const onEffectsChange = (evt) => {
   const effect = evt.target.id.split('-')[1];
@@ -95,4 +91,4 @@ const onEffectsChange = (evt) => {
   updateEffectImage();
 };
 
-export { resetEffectImage, createSlider, onEffectsChange, destroySlider };
+export { resetEffectImage, createSlider, onEffectsChange };
