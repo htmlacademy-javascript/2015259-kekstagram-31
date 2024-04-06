@@ -17,7 +17,7 @@ const resetUploadPicture = () => {
   resetValidators();
 };
 
-const hideUploadPicture = () => {
+const onImgUploadCancel = () => {
   uploadForm.reset();
   resetUploadPicture();
   imageUploadOverlay.classList.add('hidden');
@@ -27,7 +27,7 @@ const hideUploadPicture = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
-const showUploadPicture = () => {
+const onImgUploadControl = () => {
   resetUploadPicture();
   imageUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
@@ -36,22 +36,22 @@ const showUploadPicture = () => {
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
-const ifInTextFieldFocused = () =>
+const isInTextFieldFocused = () =>
   document.activeElement === hashtagField || document.activeElement === commentField;
 
 //функция для нажатия на "Esc"
 const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt) && !ifInTextFieldFocused()) {
+  if (isEscapeKey(evt) && !isInTextFieldFocused()) {
     evt.preventDefault();
     const hasHiddenPopup = document.querySelector('.error');
     if (!hasHiddenPopup) {
-      hideUploadPicture();
+      onImgUploadCancel();
     }
   }
 };
 
-uploadFile.addEventListener('change', showUploadPicture);
+uploadFile.addEventListener('change', onImgUploadControl);
 
-uploadCancel.addEventListener('click', hideUploadPicture);
+uploadCancel.addEventListener('click', onImgUploadCancel);
 
-export { hideUploadPicture };
+export { onImgUploadCancel };

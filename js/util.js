@@ -22,28 +22,8 @@ const debounce = (callback, timeoutDelay) => {
   };
 };
 
-const getRandomInteger = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-
-const getRandomEArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
-
-const generatedUniqueRandomId = (min, max) => {
-  let uniqueIdArray = [];
-
-  const generateRandomId = () => {
-    const randomNumbers = Math.floor(Math.random() * (max - min + 1)) + min;
-    if (!uniqueIdArray.includes(randomNumbers)) {
-      uniqueIdArray = [...uniqueIdArray, randomNumbers];
-      return randomNumbers;
-    } else {
-      return generateRandomId();
-    }
-
-  };
-  return generateRandomId;
-};
-
 const isEscapeKey = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
 const checkIdentical = (items) => items.some((item, i) => items.indexOf(item, i + 1) > -1);
 
-export { getRandomInteger, getRandomEArrayElement, generatedUniqueRandomId, isEscapeKey, checkIdentical, debounce, showAlert };
+export { isEscapeKey, checkIdentical, debounce, showAlert };

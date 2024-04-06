@@ -1,5 +1,5 @@
 import { sendData } from './api.js';
-import { hideUploadPicture } from './open-upload.js';
+import { onImgUploadCancel } from './open-upload.js';
 import { showMessage } from './message-of-uploaded.js';
 import { createSlider } from './effects.js';
 import {
@@ -51,7 +51,7 @@ const unblockSubmitButton = () => {
 const setFormSubmit = async (formData) => {
   try {
     await sendData(formData);
-    hideUploadPicture();
+    onImgUploadCancel();
     showMessage('success');
   } catch {
     showMessage('error');

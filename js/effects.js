@@ -1,4 +1,4 @@
-const Effect = {
+const setStyle = {
   chrome: { min: 0, max: 1, step: 0.1, style: (value) => `grayscale(${value})` },
   sepia: { min: 0, max: 1, step: 0.1, style: (value) => `sepia(${value})` },
   marvin: { min: 0, max: 100, step: 1, style: (value) => `invert(${value}%)` },
@@ -29,7 +29,7 @@ const resetEffectImage = () => {
 // функция обновляющая изображение с применением выбранного эффекта
 const updateEffectImage = () => {
   sliderValue.value = imgEffect.value;
-  imgUploadPreview.style.filter = Effect[imgEffect.effect].style(imgEffect.value);
+  imgUploadPreview.style.filter = setStyle[imgEffect.effect].style(imgEffect.value);
 
   imgUploadPreview.classList.forEach((item) => {
     if (item.includes('effects__preview--')) {
@@ -50,11 +50,11 @@ const updateEffectImage = () => {
 const createSlider = () => {
   window.noUiSlider.create(sliderElement, {
     range: {
-      min: Effect[imgEffect.effect].min,
-      max: Effect[imgEffect.effect].max,
+      min: setStyle[imgEffect.effect].min,
+      max: setStyle[imgEffect.effect].max,
     },
-    start: Effect[imgEffect.effect].max,
-    step: Effect[imgEffect.effect].step,
+    start: setStyle[imgEffect.effect].max,
+    step: setStyle[imgEffect.effect].step,
     connect: 'lower',
     format: {
       to: (value) => Number.isInteger(value) ? value.toFixed(0) : value.toFixed(1),
@@ -73,11 +73,11 @@ const createSlider = () => {
 const updateOptionsSlider = (effect) => {
   sliderElement.noUiSlider.updateOptions({
     range: {
-      min: Effect[effect].min,
-      max: Effect[effect].max,
+      min: setStyle[effect].min,
+      max: setStyle[effect].max,
     },
-    start: Effect[effect].max,
-    step: Effect[effect].step,
+    start: setStyle[effect].max,
+    step: setStyle[effect].step,
   });
 };
 

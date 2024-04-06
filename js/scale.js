@@ -5,6 +5,7 @@ const ScaleValue = {
 };
 
 const preview = document.querySelector('.img-upload__preview img');
+const scalesControls = document.querySelector('.img-upload__scale');
 const smallerScale = document.querySelector('.scale__control--smaller');
 const biggerScale = document.querySelector('.scale__control--bigger');
 const scaleControl = document.querySelector('.scale__control--value');
@@ -19,15 +20,16 @@ const changeImageScale = (value) => {
 };
 
 //обработчики событий на контроллерах
-smallerScale.addEventListener('click', () => {
-  if (currentScale - ScaleValue.STEP >= ScaleValue.MIN) {
-    changeImageScale(currentScale - ScaleValue.STEP);
-  }
-});
-
-biggerScale.addEventListener('click', () => {
-  if (currentScale + ScaleValue.STEP <= ScaleValue.MAX) {
-    changeImageScale(currentScale + ScaleValue.STEP);
+scalesControls.addEventListener('click', (event) => {
+  const target = event.target;
+  if (target === smallerScale) {
+    if (currentScale - ScaleValue.STEP >= ScaleValue.MIN) {
+      changeImageScale(currentScale - ScaleValue.STEP);
+    }
+  } else if (target === biggerScale) {
+    if (currentScale + ScaleValue.STEP <= ScaleValue.MAX) {
+      changeImageScale(currentScale + ScaleValue.STEP);
+    }
   }
 });
 

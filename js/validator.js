@@ -36,13 +36,7 @@ const validateCountHashtags = (value) => {
 };
 
 //проверка длины комментария
-const validateCommentLenght = (comment) => {
-  if (comment.length <= MAX_COMMENT_LENGTH) {
-    return true;
-  } else {
-    return false;
-  }
-};
+const validateCommentLenght = (comment) => comment.length <= MAX_COMMENT_LENGTH;
 
 export {
   validateUniqueHashtags,
