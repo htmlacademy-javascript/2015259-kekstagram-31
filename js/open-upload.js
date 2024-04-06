@@ -17,7 +17,7 @@ const resetUploadPicture = () => {
   resetValidators();
 };
 
-const onImgUploadCancel = () => {
+const onImgUploadCancelClick = () => {
   uploadForm.reset();
   resetUploadPicture();
   imageUploadOverlay.classList.add('hidden');
@@ -27,7 +27,7 @@ const onImgUploadCancel = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
-const onImgUploadControl = () => {
+const onImgUploadControlClick = () => {
   resetUploadPicture();
   imageUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
@@ -45,13 +45,13 @@ const onDocumentKeydown = (evt) => {
     evt.preventDefault();
     const hasHiddenPopup = document.querySelector('.error');
     if (!hasHiddenPopup) {
-      onImgUploadCancel();
+      onImgUploadCancelClick();
     }
   }
 };
 
-uploadFile.addEventListener('change', onImgUploadControl);
+uploadFile.addEventListener('change', onImgUploadControlClick);
 
-uploadCancel.addEventListener('click', onImgUploadCancel);
+uploadCancel.addEventListener('click', onImgUploadCancelClick);
 
-export { onImgUploadCancel };
+export { onImgUploadCancelClick };

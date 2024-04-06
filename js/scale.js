@@ -20,8 +20,8 @@ const changeImageScale = (value) => {
 };
 
 //обработчики событий на контроллерах
-scalesControls.addEventListener('click', (event) => {
-  const target = event.target;
+scalesControls.addEventListener('click', (evt) => {
+  const target = evt.target;
   if (target === smallerScale) {
     if (currentScale - ScaleValue.STEP >= ScaleValue.MIN) {
       changeImageScale(currentScale - ScaleValue.STEP);
