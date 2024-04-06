@@ -1,4 +1,4 @@
-import { onSmallPictureCLick } from './open-full-img.js';
+import { onBigPictureOpen } from './open-full-img.js';
 
 //Шаблон изображения
 const template = document.querySelector('#picture').content.querySelector('.picture');
@@ -16,7 +16,7 @@ const createThumbnail = (post) => {
 
   thumbnail.addEventListener('click', (evt) => {
     evt.preventDefault();
-    onSmallPictureCLick(post);
+    onBigPictureOpen(post);
   });
 
   return thumbnail;
