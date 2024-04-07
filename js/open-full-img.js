@@ -9,25 +9,8 @@ const socialCommentsList = bigPicture.querySelector('.social__comments');
 const socialCommentsCount = bigPicture.querySelector('.social__comment-total-count');
 const overlay = document.querySelector('.overlay');
 
-//функция для нажатия на "Esc"
-const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    // eslint-disable-next-line no-use-before-define
-    closeFullImg();
-  }
-};
-
-//проверка что событие произошло не на открытом окне
-const onOverlayClick = (evt) => {
-  if (!evt.target.closest('.big-picture__preview')) {
-    // eslint-disable-next-line no-use-before-define
-    closeFullImg();
-  }
-};
-
 //функция - действия при открытии большого изображения
-const openFullImg = (post) => {
+const onBigPictureOpen = (post) => {
   bigPictureImage.src = post.url;
   likesCount.textContent = post.likes;
   socialCommentsCount.textContent = post.comments.length;
@@ -41,15 +24,30 @@ const openFullImg = (post) => {
 };
 
 //функция - действия при закрытии большого изображения
-const closeFullImg = () => {
+const onBigPictureClose = () => {
   bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   overlay.removeEventListener('click', onOverlayClick);
 };
 
+//функция для нажатия на "Esc"
+function onDocumentKeydown(evt) {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    onBigPictureClose();
+  }
+}
+
+//проверка что событие произошло не на открытом окне
+function onOverlayClick(evt) {
+  if (!evt.target.closest('.big-picture__preview')) {
+    onBigPictureClose();
+  }
+}
+
 bigPictureCancel.addEventListener('click', () => {
-  closeFullImg();
+  onBigPictureClose();
 });
 
-export { openFullImg };
+export { onBigPictureOpen };

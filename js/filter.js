@@ -18,7 +18,7 @@ const compareThumbnails = (photoA, photoB) => {
   return rankB - rankA;
 };
 
-const initFilterListeners = (photos, showThumbnails) => {
+const onImgFiltersButtonClick = (photos, showThumbnails) => {
   defaultFilterButton.addEventListener('click', (evt) => {
     showThumbnails(photos);
     setActiveFilter(evt.target);
@@ -40,4 +40,4 @@ const initFilterListeners = (photos, showThumbnails) => {
   });
 };
 
-export { initFilterListeners };
+export { onImgFiltersButtonClick };
