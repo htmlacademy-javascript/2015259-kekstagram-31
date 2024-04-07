@@ -9,21 +9,19 @@ let messageTitle = null;
 
 const removeMessage = () => {
   message.remove();
-  // eslint-disable-next-line no-use-before-define
   document.removeEventListener('click', onClick);
-  // eslint-disable-next-line no-use-before-define
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
-const onDocumentKeydown = (evt) => {
+function onDocumentKeydown(evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
 
     removeMessage();
   }
-};
+}
 
-const onClick = (evt) => {
+function onClick(evt) {
   evt.preventDefault();
 
   if (messageBlock === evt.target || messageTitle === evt.target) {
@@ -32,7 +30,7 @@ const onClick = (evt) => {
   }
 
   removeMessage();
-};
+}
 
 const showMessage = (type) => {
   const template = type === 'success' ? successMessageTemplate : errorMessageTemplate;

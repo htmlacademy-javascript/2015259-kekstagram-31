@@ -1,39 +1,24 @@
+import { isEscapeKey } from './util.js';
+import { resetEffectImage, onEffectsChange, createSlider } from './effects.js';
+import { changeImageScale, ScaleValue } from './scale.js';
+import { pristine, resetValidators } from './validator.js';
 import { sendData } from './api.js';
-import { onImgUploadCancelClick } from './open-upload.js';
 import { showMessage } from './message-of-uploaded.js';
-import { createSlider } from './effects.js';
-import {
-  validateUniqueHashtags,
-  validateSymbolsHashtags,
-  validateCountHashtags,
-  validateHashtagsByLength,
-  validateCommentLenght
-} from './validator.js';
+import { onImgUploadInputLoad } from './upload-photo.js';
 
-const form = document.querySelector('.img-upload__form');
-const submitButton = form.querySelector('#upload-submit');
-const textHashtags = document.querySelector('.text__hashtags');
-const textDescription = document.querySelector('.text__description');
+const uploadForm = document.querySelector('.img-upload__form');
+const imageUploadOverlay = document.querySelector('.img-upload__overlay');
+const uploadFile = document.querySelector('#upload-file');
+const uploadCancel = document.querySelector('#upload-cancel');
+const effects = document.querySelector('.img-upload__effects');
+const hashtagField = document.querySelector('.text__hashtags');
+const commentField = document.querySelector('.text__description');
+const submitButton = uploadForm.querySelector('#upload-submit');
 
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
   SENDING: 'Публикация...'
 };
-
-//Cоздает новый объект pristine, который будет управлять валидацией формы,
-//добавляя и удаляя классы и тексты об ошибках в зависимости от результатов валидации
-const pristine = new Pristine(form, {
-  classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__field-wrapper--error',
-});
-
-//Добавим валидаторы к полям формы, каждый с соответствующими условиями проверки и сообщением об ошибке в случае невалидных данных.
-pristine.addValidator(textHashtags, validateCountHashtags, 'Не более 5 хэштегов', 1, true);
-pristine.addValidator(textHashtags, validateHashtagsByLength, 'Максимальная длина хэштега 20 символов, включая решётку', 1, true);
-pristine.addValidator(textHashtags, validateSymbolsHashtags, 'После # используйте буквы и цифры, без пробелов и спецсимволов', 1, true);
-pristine.addValidator(textHashtags, validateUniqueHashtags, 'Хэштеги не должны повторяться', 1, true);
-pristine.addValidator(textDescription, validateCommentLenght, 'Длина комментария не более 140 символов', 1, true);
 
 createSlider();
 
@@ -47,6 +32,49 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
+const resetUploadPicture = () => {
+  changeImageScale(ScaleValue.MAX);
+  resetEffectImage();
+  resetValidators();
+};
+
+const onImgUploadCancelClick = () => {
+  uploadForm.reset();
+  resetUploadPicture();
+  imageUploadOverlay.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  effects.removeEventListener('change', onEffectsChange);
+  document.removeEventListener('keydown', onDocumentKeydown);
+};
+
+const onImgUploadControlClick = () => {
+  resetUploadPicture();
+  imageUploadOverlay.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  effects.addEventListener('change', onEffectsChange);
+  document.addEventListener('keydown', onDocumentKeydown);
+};
+
+const isTextFieldFocused = () =>
+  document.activeElement === hashtagField || document.activeElement === commentField;
+
+//функция для нажатия на "Esc"
+function onDocumentKeydown(evt) {
+  if (isEscapeKey(evt) && !isTextFieldFocused()) {
+    evt.preventDefault();
+    const hasHiddenPopup = document.querySelector('.error');
+    if (!hasHiddenPopup) {
+      onImgUploadCancelClick();
+    }
+  }
+}
+
+uploadFile.addEventListener('change', onImgUploadControlClick);
+
+uploadCancel.addEventListener('click', onImgUploadCancelClick);
+
+onImgUploadInputLoad();
+
 //Добавим обработчик события 'submit' для формы
 const setFormSubmit = async (formData) => {
   try {
@@ -58,19 +86,17 @@ const setFormSubmit = async (formData) => {
   }
 };
 
-form.addEventListener('submit', async (evt) => {
-  evt.preventDefault();
+const addFormSubmit = () => {
+  uploadForm.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
 
-  const isValid = pristine.validate();
-  if (isValid) {
-    blockSubmitButton();
-    await setFormSubmit(new FormData(form));
-    unblockSubmitButton();
-  }
-});
-
-const resetValidators = () => {
-  pristine.reset();
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      await setFormSubmit(new FormData(uploadForm));
+      unblockSubmitButton();
+    }
+  });
 };
 
-export { resetValidators };
+export { addFormSubmit };

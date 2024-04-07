@@ -2,10 +2,9 @@ import { renderThumbnails } from './thumbnails.js';
 import { getData } from './api.js';
 import { showAlert, debounce } from './util.js';
 import { onImgFiltersButtonClick } from './filter.js';
-import { onImgUploadInputLoad } from './upload-photo.js';
-import './edit-form.js';
+import { addFormSubmit } from './edit-form.js';
 
-onImgUploadInputLoad();
+addFormSubmit();
 
 const RENDER_PHOTOS_DELAY = 500;
 

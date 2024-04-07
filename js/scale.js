@@ -5,22 +5,22 @@ const ScaleValue = {
 };
 
 const preview = document.querySelector('.img-upload__preview img');
-const scalesControls = document.querySelector('.img-upload__scale');
+const scaleControls = document.querySelector('.img-upload__scale');
 const smallerScale = document.querySelector('.scale__control--smaller');
 const biggerScale = document.querySelector('.scale__control--bigger');
-const scaleControl = document.querySelector('.scale__control--value');
+const scaleControlValue = document.querySelector('.scale__control--value');
 
 let currentScale = ScaleValue.MAX;
 
 //изменение масштаба изображения
 const changeImageScale = (value) => {
   currentScale = value;
-  scaleControl.value = `${value}%`;
+  scaleControlValue.value = `${value}%`;
   preview.style.transform = `scale(${value / 100})`;
 };
 
 //обработчики событий на контроллерах
-scalesControls.addEventListener('click', (evt) => {
+scaleControls.addEventListener('click', (evt) => {
   const target = evt.target;
   if (target === smallerScale) {
     if (currentScale - ScaleValue.STEP >= ScaleValue.MIN) {
